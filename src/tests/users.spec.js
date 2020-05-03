@@ -22,8 +22,9 @@ describe('users', () => {
   
   it('testing if recover status 404 if user not exist in database', async () => { 
     const response = await request(BASE_URL).get("users/100");
-    const challenge = response.body;
-    expect(challenge.status).toBe(404);
+    const user = response.body;
+    console.log(response.body)
+    expect(user.status).toBe(404);
   });
 
   it('testing sucessfully register users', async () => { 
