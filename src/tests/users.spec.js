@@ -10,8 +10,8 @@ describe('users', () => {
 
   it('testing recovers all users', async () => { 
     const response = await request(BASE_URL).get("users");
-    const challenges = response.body;
-    expect(challenges).toBeDefined();
+    const user = response.body;
+    expect(user).toBeDefined();
   });
   
   it('testing recover user by id', async () => { 

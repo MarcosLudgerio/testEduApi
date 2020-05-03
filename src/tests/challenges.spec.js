@@ -15,9 +15,10 @@ describe('challenge', () => {
   });
   
   it('testing if you recover a challenge by id', async () => { 
-    const response = await request(BASE_URL).get("challenges/32");
-    const challenge = response.body;
-    expect(challenge).toBeDefined();
+    const response = await request(BASE_URL).get("challenges/51");
+    const {id, word} = response.body;
+    expect(id).toBe(51);
+    expect(word).toBe("challenge teste");
   });
   
   it('testing if it recovers a challlenge that does not exist in database', async () => { 
@@ -37,11 +38,11 @@ describe('challenge', () => {
   });
 
   it('testing sucessfully updates challenge', async () => { 
-    const response = await request(BASE_URL).put("challenges/50").send({
-        word: "alterado a partir do teste",
-        soundUrl: "https:///www.palcomp3.com/music/natiruts/andei_so.mp3",
-        videoUrl: "https:///www.youtube.com/vid02dc21/",
-        imageUrl: "https:///www.google.com/images/23f1g23beda3478fa.jpg"
+    const response = await request(BASE_URL).put("challenges/51").send({
+      word:"challenge teste",
+      soundUrl:"sound test",
+      videoUrl:"video test",
+      imageUrl:"image test"
     });
     expect(response.status).toBe(204);
   });
