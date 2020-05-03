@@ -3,30 +3,30 @@ const request = require('supertest');
 const BASE_URL = "http://educapi.herokuapp.com/";
 
 describe('challenge', () => {
-  it('testing connection', async () => { 
+  it('testing the connection', async () => { 
   const response = await request(BASE_URL).get("");
    expect(response.status).toBe(200);
   });
 
-  it('test getAllChallenges if equals a size 32', async () => { 
+  it('testing recovers all challenges', async () => { 
     const response = await request(BASE_URL).get("challenges");
     const challenges = response.body;
     expect(challenges).toBeDefined();
   });
   
-  it('test getOneChallenge by id', async () => { 
+  it('testing if you recover a challenge by id', async () => { 
     const response = await request(BASE_URL).get("challenges/32");
     const challenge = response.body;
     expect(challenge).toBeDefined();
   });
   
-  it('test getOneChallenge by id return status 404 if id is null or notExist', async () => { 
+  it('testing if it recovers a challlenge that does not exist in database', async () => { 
     const response = await request(BASE_URL).get("challenges/1");
     const challenge = response.body;
     expect(challenge.status).toBe(404);
   });
 
-  it('test if post challenge is sucess', async () => { 
+  it('testing sucessfully register challenge', async () => { 
     const response = await request(BASE_URL).post("challenges").send({
         word:"teste",
         soundUrl:null,
@@ -36,7 +36,7 @@ describe('challenge', () => {
     expect(response.status).toBe(201);
   });
 
-  it('test if put challenge is sucess', async () => { 
+  it('testing sucessfully updates challenge', async () => { 
     const response = await request(BASE_URL).put("challenges/50").send({
         word: "alterado a partir do teste",
         soundUrl: "https:///www.palcomp3.com/music/natiruts/andei_so.mp3",
@@ -46,7 +46,7 @@ describe('challenge', () => {
     expect(response.status).toBe(204);
   });
 
-  // it('test if deleting challenge with sucess', async () => { 
+  // it('testing sucessfully delete challenge', async () => { 
   //   const response = await request(BASE_URL).delete("challenges/47");
   //   expect(response.status).toBe(204);
   // });
