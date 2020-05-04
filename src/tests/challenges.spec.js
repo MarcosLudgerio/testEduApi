@@ -10,15 +10,14 @@ describe('challenge', () => {
 
   it('testing recovers all challenges', async () => { 
     const response = await request(BASE_URL).get("challenges");
-    const challenges = response.body;
-    expect(challenges).toBeDefined();
+    expect(response.status).toBe(200);
   });
   
   it('testing if you recover a challenge by id', async () => { 
-    const response = await request(BASE_URL).get("challenges/51");
+    const response = await request(BASE_URL).get("challenges/37");
     const {id, word} = response.body;
-    expect(id).toBe(51);
-    expect(word).toBe("challenge teste");
+    expect(id).toBe(37);
+    expect(word).toBe("Tenis");
   });
   
   it('testing if it recovers a challlenge that does not exist in database', async () => { 
@@ -29,22 +28,28 @@ describe('challenge', () => {
 
   it('testing sucessfully register challenge', async () => { 
     const response = await request(BASE_URL).post("challenges").send({
-        word:"teste",
-        soundUrl:null,
-        videoUrl: null,
-        imageUrl:null
+        word:"BOLAS",
+        soundUrl: "https://www.palcomp3.com/musicalega.mp3",
+        videoUrl: "https://www.youtube.com/sVx219203.mp4",
+        imageUrl: "https://www.google.com/images/bola_furada.png"
     });
     expect(response.status).toBe(201);
   });
 
   it('testing sucessfully updates challenge', async () => { 
     const response = await request(BASE_URL).put("challenges/51").send({
-      word:"challenge teste",
-      soundUrl:"sound test",
-      videoUrl:"video test",
-      imageUrl:"image test"
+      word:"PORTA",
+      soundUrl:"teste2",
+      videoUrl:"teste2",
+      imageUrl:"teste3"
     });
     expect(response.status).toBe(204);
+
+    const responseChallenge = await request(BASE_URL).get("challenges/51");
+    const challengeAtualizado = responseChallenge.body;
+
+    expect(challengeAtualizado.word).toBe("PORTA");
+    
   });
 
   // it('testing sucessfully delete challenge', async () => { 
