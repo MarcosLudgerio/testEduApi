@@ -3,15 +3,9 @@ const request = require('supertest');
 const BASE_URL = "http://educapi.herokuapp.com/";
 
 describe('users', () => {
-  it('testing connection', async () => { 
-  const response = await request(BASE_URL).get("");
-   expect(response.status).toBe(200);
-  });
-
   it('testing recovers all users', async () => { 
     const response = await request(BASE_URL).get("users");
-    const user = response.body;
-    expect(user).toBeDefined();
+    expect(response.status).toBe(200);
   });
   
   it('testing recover user by id', async () => { 
