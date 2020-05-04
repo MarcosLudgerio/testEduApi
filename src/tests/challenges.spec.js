@@ -3,11 +3,6 @@ const request = require('supertest');
 const BASE_URL = "http://educapi.herokuapp.com/";
 
 describe('challenge', () => {
-  it('testing the connection', async () => { 
-  const response = await request(BASE_URL).get("");
-   expect(response.status).toBe(200);
-  });
-
   it('testing recovers all challenges', async () => { 
     const response = await request(BASE_URL).get("challenges");
     expect(response.status).toBe(200);
@@ -46,9 +41,9 @@ describe('challenge', () => {
     expect(response.status).toBe(204);
 
     const responseChallenge = await request(BASE_URL).get("challenges/51");
-    const challengeAtualizado = responseChallenge.body;
+    const {word} = responseChallenge.body;
 
-    expect(challengeAtualizado.word).toBe("PORTA");
+    expect(word).toBe("PORTA");
     
   });
 
