@@ -32,18 +32,18 @@ describe('challenge', () => {
   });
 
   it('testing sucessfully updates challenge', async () => { 
-    const response = await request(BASE_URL).put("challenges/51").send({
-      word:"PORTA",
-      soundUrl:"teste2",
+    const response = await request(BASE_URL).put("challenges/23").send({
+      word:"Porta",
+      soundUrl:"https://cec-a.akamaihd.net/img-prod/images/standard/porta-pivotante-em-madeira-macica-quartier-eucalipto-210x100cm-natural-cruzeiro-1309907-foto-20180405173925121_225172_A.png",
       videoUrl:"teste2",
-      imageUrl:"teste3"
+      imageUrl:"https://cec-a.akamaihd.net/img-prod/images/standard/porta-pivotante-em-madeira-macica-quartier-eucalipto-210x100cm-natural-cruzeiro-1309907-foto-20180405173925121_225172_A.png"
     });
     expect(response.status).toBe(204);
 
-    const responseChallenge = await request(BASE_URL).get("challenges/51");
+    const responseChallenge = await request(BASE_URL).get("challenges/23");
     const {word} = responseChallenge.body;
 
-    expect(word).toBe("PORTA");
+    expect(word).toBe("Porta");
     
   });
 
