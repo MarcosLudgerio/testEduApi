@@ -51,9 +51,7 @@ describe('contexts', () => {
 
   });
 
-  it('testing sucessfully delete context', async () => { 
-    const response = await request(BASE_URL).delete("contexts/151");
-    expect(response.status).toBe(204);
+  // it('testing sucessfully delete context', async () => { 
+  //   const response = await request(BASE_URL).delete("contexts/151");
+  //   expect(response.status).toBe(204);
   });
-  
-});
