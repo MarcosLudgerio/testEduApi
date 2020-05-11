@@ -4,10 +4,16 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "start": "nodemon src/index.js"
   },
   "devDependencies": {
     "jest": "^25.5.4",
+    "nodemon": "^2.0.3",
     "supertest": "^4.0.2"
+  },
+  "dependencies": {
+    "axios": "^0.19.2",
+    "express": "^4.17.1"
   }
 }
