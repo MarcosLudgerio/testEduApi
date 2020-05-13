@@ -1,5 +1,4 @@
 node_modules/
-src/tests/geripocaPiando.spec.js
 src/controllers/
 src/service/
 src/tests/usingControllers/
