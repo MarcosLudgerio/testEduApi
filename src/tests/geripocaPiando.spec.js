@@ -1,108 +1,115 @@
-const request = require('supertest');
+const Facade =  require('../facade/Facade');
 
-const BASE_URL = "http://educapi.herokuapp.com/";
+const objFacade = new Facade();
 
+var urlContext = "";
+var urlChallenge = "";
+var urlUser = "";
 describe('users', () => {
-  it('testing connection', async () => { 
-  const response = await request(BASE_URL).get("");
-   expect(response.status).toBe(200);
-  });
+    beforeEach(async () => {
+        await objFacade.loadUsers();
+    });
 
-  it('testing users features', async () => { 
-    let response = await request(BASE_URL).get("users");
-    const  totalUsers = response.body.length;
-    expect(response.body.length).toBe(totalUsers);
-    await request(BASE_URL).post("users").send({
-        name:"Marcos",
-        email:"marcos@gmail.com",
-        password:"123456789",
+    it('testing users features', async () => { 
+      let allUsersBefore = await objFacade.getAllUsers();
+      let totalUsers = allUsersBefore.length;
+
+      urlUser = await objFacade.saveUser(null, "User test", "user@test.com", "test12345"); // PARAMS: id, name, email, password
+
+      allUsers = await objFacade.getAllUsers();
+
+      expect(allUsers.length).toBe(totalUsers + 1);
+
+      const { id, name, email } = objFacade.getUser(urlUser);
+
+      expect(name).toBe("User test");
+      expect(email).toBe("user@test.com");
+
+      var status = await objFacade.updateUser(urlUser, id, "user alterado", "email@user.com", "54321test") // PARAMS: urlUser, id, name, password, email
+
+      expect(status).toBe(204);
+
+      const UserUpdate = objFacade.getUser(urlUser);
+
+      expect(UserUpdate.id).toBe(id);
+      expect(UserUpdate.name).toBe("user alterado");
+      expect(UserUpdate.email).toBe("email@user.com");
+      expect(UserUpdate.password).toBe("54321test");
+
+      status = await objFacade.deleteUser(urlUser);
+      expect(status).toBe(204);
     });
-    response = await request(BASE_URL).get("users");
-    expect(response.body.length).toBe(totalUsers + 1);
-    await request(BASE_URL).post("users").send({
-        name:"Raimundo",
-        email:"raimundo@gmail.com",
-        password:"passwordtest",
-    });
-    response = await request(BASE_URL).get("users");
-    expect(response.body.length).toBe(totalUsers + 2);
-    const userId = 1;
-    await request(BASE_URL).put(`users/${userId}`).send({
-        name:"Raimundo Marcos",
-        email:"teste2@teste2.com",
-        password:"passwordte",
-    });
-    response = await request(BASE_URL).get(`users/${userId}`);
-    expect(response.body.id).toBe(userId);
-    expect(response.body.name).toBe("Raimundo Marcos");
-    response = await request(BASE_URL).get(`users`);
-    expect(response.body.length).toBe(totalUsers + 2);
-  });
 });
 
 describe('contexts', () => {  
-    it('testing contexts features', async () => { 
-      let response = await request(BASE_URL).get("contexts");
-      const totalContexts = response.body.length;
-      expect(response.body.length).toBe(totalContexts);
-      await request(BASE_URL).post("contexts").send({
-        name: "ESCOLA",
-        imageUrl: "https:///www.google.com/images/23f1g23beda3478fa1.jpg",
-        soundUrl: "https:///www.palcomp3.com/music/natiruts/andei_so.mp3",
-        videoUrl: "https:///www.youtube.com/vid02dc21/"
+     beforeEach( async () => {
+        await objFacade.loadContexts();
     });
-      response = await request(BASE_URL).get("contexts");
-      expect(response.body.length).toBe(totalContexts + 1);
-      await request(BASE_URL).post("contexts").send({
-        name: "PARQUE",
-        imageUrl: "https:///www.google.com/images/parqueDeDiversao.jpg",
-        soundUrl: "https:///www.palcomp3.com/music/natiruts/so_hoje.mp3",
-        videoUrl: "https:///www.youtube.com/vid02dc21.mp4"
-    });
-      response = await request(BASE_URL).get("contexts");
-      expect(response.body.length).toBe(totalContexts + 2);
 
-      response = await request(BASE_URL).get(`contexts/154`);
-      const contextActual = response.body;
-      await request(BASE_URL).put(`contexts/${contextActual.id}`).send({
-        name: "CIRCO",
-        imageUrl: "https:///www.google.com/images/beto_carreiro.jpg",
-        soundUrl: "https:///www.palcomp3.com/music/natiruts/madagascar.mp3",
-        videoUrl: "https:///www.youtube.com/video/palhaco_assassino.mp4"
-    });
-    response = await request(BASE_URL).get(`contexts/${contextActual.id}`);
-    const novoContext = response.body;  
-    expect(novoContext.id).toBe(contextActual.id);
-    expect(novoContext.name).toBe("CIRCO");
+    it('testing contexts features', async () => { 
+      let allContextsBefore = await objFacade.getAllContexts();
+      let totalContexts = allContextsBefore.length;
+      
+      urlContext = await objFacade.saveContext(null, "Mesa de jantar", "sound.mp3", "video.mp4", "imagem.jpg"); // PARAMS: id, name, soundUrl, videoUrl, imageUrl
+      
+      allContexts = await objFacade.getAllContexts();
+
+      expect(allContexts.length).toBe(totalContexts + 1);
+      
+      const { name, soundUrl, imageUrl, videoUrl } = objFacade.getContext(urlContext);
+
+      expect(name).toBe("Mesa de jantar");
+      expect(soundUrl).toBe("sound.mp3");
+      expect(imageUrl).toBe("video.mp4");
+      expect(videoUrl).toBe("imagem.jpg");
+
+      var status = await objFacade.updateContext(urlContext, null, "nome alterado", "alterado.mp3", "videoNovo.mp4", "novaImagem") // PARAMS: urlContextUpdate, name, soundUrl, videoUrl, imageUrl
+
+      expect(status).toBe(204);
+
+      const ContextUpdate = objFacade.getContext(urlContext);
+      expect(ContextUpdate.name).toBe("nome alterado");
+      expect(ContextUpdate.soundUrl).toBe("alterado.mp3");
+      expect(ContextUpdate.imageUrl).toBe("videoNovo.mp4");
+      expect(ContextUpdate.videoUrl).toBe("novaImagem.jpg");
+
+      status = await objFacade.deleteContext(urlContext);
+      expect(status).toBe(204);
     });
 });
 
 describe('challenges', () => {  
-    it('testing challenges features', async () => { 
-      let response = await request(BASE_URL).get("challenges");
-      const totalChallenges = response.body.length;
-      expect(response.body.length).toBe(totalChallenges);
-      await request(BASE_URL).post("challenges").send({
-        word:"COLHER",
-        soundUrl:null,
-        videoUrl: null,
-        imageUrl:null
-    });
-      response = await request(BASE_URL).get("challenges");
-      expect(response.body.length).toBe(totalChallenges + 1);
-      
-      response = await request(BASE_URL).get(`challenges/192`);
-      const challengeAtual = response.body;
+  beforeEach(async () => {
+    await objFacade.loadChallenges();
+  });
+  it('testing challenges features', async () => { 
+    let allChallengesBefore = await objFacade.getAllChallenges();
+    let totalChallenges = allChallengesBefore.length;
+    
+    urlChallenge = await objFacade.saveChallenge(null, "Mesa de jantar", "sound.mp3", "video.mp4", "imagem.jpg"); // PARAMS: name, soundUrl, videoUrl, imageUrl
+    
+    allChallenges = await objFacade.getAllChallenges();
 
-      await request(BASE_URL).put(`challenges/${challengeAtual.id}`).send({
-        word: "FUTEBOL",
-        soundUrl: "https:///www.palcomp3.com/music/skank/partida-de-futebol.mp3",
-        videoUrl: "https:///www.youtube.com/fantastico/bola_murcha_2002.3gp",
-        imageUrl: "https:///www.google.com/images/gramado_verde_maracana.jpg"
-    });
-    response = await request(BASE_URL).get(`challenges/${challengeAtual.id}`);
-    const novoChallenge = response.body;
-    expect(challengeAtual.id).toBe(novoChallenge.id);
-    expect(novoChallenge.word).toBe("FUTEBOL");
-    });
+    expect(allChallenges.length).toBe(totalChallenges + 1);
+    
+    const { name, soundUrl, imageUrl, videoUrl } = objFacade.getChallenge(urlchallenge);
+
+    expect(name).toBe("Mesa de jantar");
+    expect(soundUrl).toBe("sound.mp3");
+    expect(imageUrl).toBe("video.mp4");
+    expect(videoUrl).toBe("imagem.jpg");
+
+    var status = await objFacade.updateChallenge(urlchallenge, null, "nome alterado", "alterado.mp3", "videoNovo.mp4", "novaImagem") // urlChallenge, id, word, soundUrl, videoUrl, imageUrl
+
+    expect(status).toBe(204);
+
+    const challengeUpdate = objFacade.getChallenge(urlchallenge);
+    expect(challengeUpdate.name).toBe("nome alterado");
+    expect(challengeUpdate.soundUrl).toBe("alterado.mp3");
+    expect(challengeUpdate.imageUrl).toBe("videoNovo.mp4");
+    expect(challengeUpdate.videoUrl).toBe("novaImagem.jpg");
+
+    status = await objFacade.deleteChallenge(urlchallenge);
+    expect(status).toBe(204);
+  });
 });

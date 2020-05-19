@@ -1,6 +1,6 @@
 node_modules/
 src/controllers/
 src/service/
-src/tests/usingControllers/
+src/tests/geripocaPiando.spec.js
 index.js
 routes.js
