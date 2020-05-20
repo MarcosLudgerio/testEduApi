@@ -1,7 +1,9 @@
 class Challenge{
-    constructor(id, word, soundUrl, videoUrl, imageUrl){
+    constructor(id, word, creator, soundUrl, videoUrl, imageUrl, contexts){
         this.id = id;
         this.word = word;
+        this.creator = creator;
+        this.contexts = contexts;
         this.soundUrl = soundUrl;
         this.videoUrl = videoUrl;
         this.imageUrl = imageUrl;
@@ -41,6 +43,21 @@ class Challenge{
 
     setVideoUrl(videoUrl){
         this.videoUrl = videoUrl;
+    }
+
+    getCreator(){
+        return this.creator;
+    }
+
+    setCreator(creator){
+        this.creator = creator;
+    }
+    getContexts(){
+        return this.contexts;
+    }
+
+    setContexts(contexts){
+        this.contexts = contexts;
     }
 
 }

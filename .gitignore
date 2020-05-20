@@ -1,6 +1,3 @@
 node_modules/
-src/controllers/
-src/service/
 src/tests/geripocaPiando.spec.js
-index.js
-routes.js
+src/tests/usingFacade/testDegub.spec.js

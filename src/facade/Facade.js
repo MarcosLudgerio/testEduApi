@@ -1,5 +1,5 @@
 const axios = require('axios');
-const BASE_URL = "http://192.168.0.108:8080";
+const BASE_URL = "http://educapi.heroku.com";
 
 const Challenge = require('../models/Challange');
 const Context = require('../models/Context');
@@ -65,15 +65,17 @@ class Facade{
 
     // CHALLENGES FUNCTIONS
     async saveChallenge(id, word, soundUrl, videoUrl, imageUrl){
-        const objChallenge = new Challenge(id, word, soundUrl, videoUrl, imageUrl);
-        console.log(objChallenge);
+        let creator = new User(2, "Marcos Ludgério", "marcos@test.com", "marcos1234");
+        let contexts = [];
+        const objChallenge = new Challenge(id, word, creator, soundUrl, videoUrl, imageUrl, contexts);
+        console.log(objChallenge)
         const response = await axios.post(`${BASE_URL}/challenges`,  objChallenge);
+        this.challenges.push(objChallenge);
         const urlChallenge = response.headers.location;
         return urlChallenge;
     }
     
     getAllChallenges(){
-        console.log(this.challenges)
         return this.challenges;
     }
     
@@ -84,7 +86,10 @@ class Facade{
     }
 
     async updateChallenge(urlChallenge, id, word, soundUrl, videoUrl, imageUrl){
-        const objChallenge = new Challenge(id, word, soundUrl, videoUrl, imageUrl);
+        let creator = new User(2, "Marcos Ludgério", "marcos@test.com", "marcos1234");
+        let contexts = [];
+
+        const objChallenge = new Challenge(id, word, creator, soundUrl, videoUrl, imageUrl, contexts);
         const response = await axios.put(urlChallenge, objChallenge);
         const status = response.status;
         return status;
