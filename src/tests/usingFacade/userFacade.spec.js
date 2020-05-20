@@ -14,25 +14,19 @@ describe('User', () => {
     let totalUsers = allUsersBefore.length;
     
     urlUser = await objFacade.saveUser(null, "User test", "user@test.com", "test12345"); // PARAMS: id, name, email, password
-    
     allUsers = await objFacade.getAllUsers();
-
     expect(allUsers.length).toBe(totalUsers + 1);
     
-    const { id, name, email } = objFacade.getUser(urlUser);
-
+    const { name, email } = await objFacade.getUser(urlUser);
     expect(name).toBe("User test");
     expect(email).toBe("user@test.com");
 
-    var status = await objFacade.updateUser(urlUser, id, "user alterado", "email@user.com", "54321test") // PARAMS: urlUser, id, name, password, email
-
+    var status = await objFacade.updateUser(urlUser, null, "user alterado", "54321test", "email@user.com" ) // PARAMS: urlUser, id, name, password, email
     expect(status).toBe(204);
 
-    const UserUpdate = objFacade.getUser(urlUser);
-    expect(UserUpdate.id).toBe(id);
+    const UserUpdate = await objFacade.getUser(urlUser);
     expect(UserUpdate.name).toBe("user alterado");
     expect(UserUpdate.email).toBe("email@user.com");
-    expect(UserUpdate.password).toBe("54321test");
 
     status = await objFacade.deleteUser(urlUser);
     expect(status).toBe(204);

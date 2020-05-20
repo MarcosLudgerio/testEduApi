@@ -1,5 +1,5 @@
 const axios = require('axios');
-const BASE_URL = "http://educapi.heroku.com";
+const BASE_URL = "http://192.168.0.108:8080";
 
 const Challenge = require('../models/Challange');
 const Context = require('../models/Context');
@@ -38,6 +38,7 @@ class Facade{
     async saveContext(id, name, soundUrl, videoUrl, imageUrl){
         const objContext = new Context(id, name, soundUrl, videoUrl, imageUrl);
         const response = await axios.post(`${BASE_URL}/contexts`, objContext);
+        this.contexts.push(objContext);
         const urlContext = response.headers.location;
         return urlContext;
     }
@@ -68,7 +69,6 @@ class Facade{
         let creator = new User(2, "Marcos Ludgério", "marcos@test.com", "marcos1234");
         let contexts = [];
         const objChallenge = new Challenge(id, word, creator, soundUrl, videoUrl, imageUrl, contexts);
-        console.log(objChallenge)
         const response = await axios.post(`${BASE_URL}/challenges`,  objChallenge);
         this.challenges.push(objChallenge);
         const urlChallenge = response.headers.location;
@@ -106,6 +106,7 @@ class Facade{
     async saveUser(id, name, email, password){
         const objUser = new User(id, name, email, password);
         const response = await axios.post(`${BASE_URL}/users`, objUser);
+        this.users.push(objUser);
         const urlUser = response.headers.location;
         return urlUser;
     }
@@ -122,7 +123,7 @@ class Facade{
     
     async updateUser(urlUser, id, name, password, email){
         const objUser = new User(id, name, email, password);
-        const response = await axios.post(urlUser, objUser);
+        const response = await axios.put(urlUser, objUser);
         const status = response.status;
         return status;
     }
