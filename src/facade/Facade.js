@@ -1,5 +1,5 @@
 const axios = require('axios');
-const BASE_URL = "http://192.168.0.108:8080";
+const BASE_URL = "https://educapi.herokuapp.com/";
 
 const Challenge = require('../models/Challange');
 const Context = require('../models/Context');
