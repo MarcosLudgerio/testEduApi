@@ -21,21 +21,14 @@ $ npm run test
 Após a execução, os testes irão executar e um feedback irá ser exibido na tela
 
 ## Métodos de Requisição HTTP
-
-| Método |                Path                |
-|:------:|:----------------------------------:|
-|   GET  |          /api/listar-todos         |
-|   GET  |          /api/evento/{id}          |
-|  POST  |           /api/cadastrar           |
-|   PUT  |          /api/evento/{id}          |
-| DELETE |              /api/{id}             |
+Ao final, e possível ver a seguinte tela
+![Resultado](https://drive.google.com/file/d/1AHYiO4fM62_hg1n_bqGajepBqn-9Uedc/view?usp=sharing)
 
 ## Tecnologias Usadas
-![GitHub](https://img.shields.io/github/license/a4s-ufpb/EducAPI?label=licence) ![Type Badge](https://img.shields.io/badge/project%3A-Apps4Society-informational) ![enter image description here](https://img.shields.io/badge/project-SisAlfa-yellow)  ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/a4s-ufpb/EducAPI?color=blueviolet)
+![Jest](https://img.shields.io/github/license/a4s-ufpb/EducAPI?label=licence)
 
 
 
-- Java 8 
-- Apache Maven 3.6.3
-- Spring Boot 4
-- PostgreSQL 12.3
+- JavaScript
+- ECMAScrpit 6
+- Jest 27.2
