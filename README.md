@@ -19,7 +19,10 @@ $ npm install
 $ npm run test
 ```
 Após a execução, os testes irão executar e um feedback irá ser exibido na tela
-![Resultado](https://drive.google.com/file/d/1AHYiO4fM62_hg1n_bqGajepBqn-9Uedc/view?usp=sharing)
+![Resultado](resultado.png)
 
 ## Tecnologias Usadas
-![Jest](https://img.shields.io/github/license/a4s-ufpb/EducAPI?label=licence)
+- JavaScript 
+- ECMA Script 6
+- NodeJS 12
+- Jest 27.2
