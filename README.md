@@ -7,8 +7,7 @@ A documentação pode ser acessada en [Documentação](https://api.apps4society.
 
 
 ## Pré requisitos
-É necessário ter o [NodeJS](https://nodejs.org) instalado na sua máquina
-Assim como o [JestJS](https://jestjs.io/)
+* Ter o [NodeJS](https://nodejs.org) instalado
 
 ## Executando os testes
 Execute no terminal os comandos abaixo
@@ -18,7 +17,10 @@ $ cd testEducApi
 $ npm install
 $ npm run test
 ```
-Após a execução, os testes irão executar e um feedback irá ser exibido na tela
+
+## Resultado
+## Após a execução, os testes irão executar e um feedback irá ser exibido na tela:
+
 ![Resultado](resultado.png)
 
 ## Tecnologias Usadas
