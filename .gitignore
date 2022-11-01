@@ -1,1 +1,4 @@
 node_modules/
+src/tests/geripocaPiando.spec.js
+src/tests/usingFacade/testDegub.spec.js
+src/tests/geripocaPiando.txt

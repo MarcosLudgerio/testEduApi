@@ -3,21 +3,16 @@ const request = require('supertest');
 const BASE_URL = "http://educapi.herokuapp.com/";
 
 describe('challenge', () => {
-  it('testing the connection', async () => { 
-  const response = await request(BASE_URL).get("");
-   expect(response.status).toBe(200);
-  });
-
   it('testing recovers all challenges', async () => { 
     const response = await request(BASE_URL).get("challenges");
-    const challenges = response.body;
-    expect(challenges).toBeDefined();
+    expect(response.status).toBe(200);
   });
   
   it('testing if you recover a challenge by id', async () => { 
-    const response = await request(BASE_URL).get("challenges/32");
-    const challenge = response.body;
-    expect(challenge).toBeDefined();
+    const response = await request(BASE_URL).get("challenges/37");
+    const {id, word} = response.body;
+    expect(id).toBe(37);
+    expect(word).toBe("Tenis");
   });
   
   it('testing if it recovers a challlenge that does not exist in database', async () => { 
@@ -28,22 +23,28 @@ describe('challenge', () => {
 
   it('testing sucessfully register challenge', async () => { 
     const response = await request(BASE_URL).post("challenges").send({
-        word:"teste",
-        soundUrl:null,
-        videoUrl: null,
-        imageUrl:null
+        word:"BOLAS",
+        soundUrl: "https://www.palcomp3.com/musicalega.mp3",
+        videoUrl: "https://www.youtube.com/sVx219203.mp4",
+        imageUrl: "https://www.google.com/images/bola_furada.png"
     });
     expect(response.status).toBe(201);
   });
 
   it('testing sucessfully updates challenge', async () => { 
-    const response = await request(BASE_URL).put("challenges/50").send({
-        word: "alterado a partir do teste",
-        soundUrl: "https:///www.palcomp3.com/music/natiruts/andei_so.mp3",
-        videoUrl: "https:///www.youtube.com/vid02dc21/",
-        imageUrl: "https:///www.google.com/images/23f1g23beda3478fa.jpg"
+    const response = await request(BASE_URL).put("challenges/23").send({
+      word:"Porta",
+      soundUrl:"https://cec-a.akamaihd.net/img-prod/images/standard/porta-pivotante-em-madeira-macica-quartier-eucalipto-210x100cm-natural-cruzeiro-1309907-foto-20180405173925121_225172_A.png",
+      videoUrl:"teste2",
+      imageUrl:"https://cec-a.akamaihd.net/img-prod/images/standard/porta-pivotante-em-madeira-macica-quartier-eucalipto-210x100cm-natural-cruzeiro-1309907-foto-20180405173925121_225172_A.png"
     });
     expect(response.status).toBe(204);
+
+    const responseChallenge = await request(BASE_URL).get("challenges/23");
+    const {word} = responseChallenge.body;
+
+    expect(word).toBe("Porta");
+    
   });
 
   // it('testing sucessfully delete challenge', async () => { 
